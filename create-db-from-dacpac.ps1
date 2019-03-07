@@ -63,9 +63,10 @@ Get-ChildItem -Path $dbLocation | ? { $_.Extension -eq ".dacpac" } | % {
     & "$sqlInstallationBinFolder\SqlPackage.exe" /action:Publish /SourceFile:$srcPath /TargetServerName:$serverName /TargetDatabaseName:$name /TargetUser:$sqlUser /TargetPassword:$sqlPassword
 
     # get database files paths
-    $query = "select name, physical_name from sys.master_files where name like '$name%'"
+    $query = "select name, physical_name from sys.master_files where name like '$name%' and physical_name like '%$name%'"
     $paths = Invoke-Sqlcmd -ServerInstance $serverName -Database "master" -Query $query -Username $sqlUser -Password $sqlPassword | % { $_.physical_name }
 
+    $paths | % { Write-Host $_ -ForegroundColor Yellow }
     # detach database
     $query = "sp_detach_db '$name', 'true';"
     Invoke-Sqlcmd -ServerInstance $serverName -Database "master" -Query $query -Username $sqlUser -Password $sqlPassword
