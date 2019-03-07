@@ -16,7 +16,8 @@ $archiveFile = Get-ChildItem . -Filter "Sitecore*.zip" | Select-Object -First 1
 if ($archiveFile) {
     Write-Host "Archive found" -ForegroundColor Green
     Write-Host "Extracting" -ForegroundColor Green
-    Expand-Archive '.\Sitecore 9.1.0 rev. 001564 (WDP XP0 packages).zip' -DestinationPath "temp"
+    mkdir "temp"
+    Expand-Archive $archiveFile.FullName -DestinationPath "temp"
 
     Write-Host "Looking for scwdp package" -ForegroundColor Green
     $wdpPackage = Get-ChildItem -Path ".\temp" -Filter "*single.scwdp.zip" | Select-Object -First 1
@@ -31,7 +32,7 @@ if ($archiveFile) {
         .\7za920\7za.exe d "$($wdpPackage.FullName)" *.*
 
         Write-Host "Converting databases" -ForegroundColor Green
-        .\converet-db.ps1 $config.sqlUser $config.sqlPassword $config.serverName
+        .\create-db-from-dacpac.ps1 $config.sqlUser $config.sqlPassword $config.serverName
 
 
         mkdir "temp\Data\packages"
