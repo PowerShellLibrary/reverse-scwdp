@@ -12,7 +12,11 @@ Sitecore X.Y rev. ZZZZZZ.zip
 
 It is called reverse because it is created out of `.scwdp` file.
 
-# How to use
+## Demo
+
+![reverse-demo](https://user-images.githubusercontent.com/6848691/70654641-0338ad80-1c57-11ea-8bd5-c8af31d3b42f.gif)
+
+## How to use
 
 1. Clone repository
 ```
