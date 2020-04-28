@@ -65,7 +65,7 @@ $srcPath = $dacPac.FullName
 
 # publish db from script
 Write-Host "Processing $($_.Name)" -ForegroundColor Green
-& "$sqlInstallationBinFolder\SqlPackage.exe" /action:Publish /SourceFile:$srcPath /TargetServerName:$serverName /TargetDatabaseName:$name /TargetUser:$sqlUser /TargetPassword:$sqlPassword
+& "$sqlInstallationBinFolder\SqlPackage.exe" /action:Publish /SourceFile:$srcPath /TargetServerName:$serverName /TargetDatabaseName:$name /TargetUser:$sqlUser /TargetPassword:$sqlPassword /p:AllowIncompatiblePlatform=true
 
 # get database files paths
 $query = "select name, physical_name from sys.master_files where name like '$name%' and physical_name like '%$name%'"
